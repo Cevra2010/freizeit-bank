@@ -1,25 +1,50 @@
 <div>
-    <form wire:submit.prevent='submit'>
-        <div class="mt-6">
-            <label for="group_field">Verwendungszweck hinzufügen:</label>
-            <input type="text" wire:model='group_field' class="w-full mt-2 bg-gray-200 rounded-md p-2 ring-green-200 border-0 focus:outline-none focus:ring-2 focus:ring-green-400">
-        </div>
-        <div class="mt-4">
-            <button class="p-2 pl-4 pr-4 bg-green-600 hover:bg-green-500 text-green-50 rounded-md" type="submit">Speichern</button>
+    <h2 class="font-bold text-slate-800 text-xl mb-1">Verwendungszwecke</h2>
+    <p class="text-slate-400 text-sm mb-5">Definiere Kategorien für Buchungen (z.&nbsp;B. Eisdiele, Ausflug, Snacks).</p>
+
+    <form wire:submit.prevent='submit' class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6">
+        <label class="block text-sm font-medium text-slate-700 mb-2">Neuen Zweck anlegen</label>
+        <div class="flex space-x-2">
+            <input type="text" wire:model='group_field'
+                class="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent transition"
+                placeholder="z. B. Eisdiele, Ausflug ...">
+            <button type="submit"
+                class="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-3 rounded-xl transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>Anlegen</span>
+            </button>
         </div>
     </form>
-    <h1 class="mt-4 text-gray-800 font-semibold text-xl mb-3">Verwendungszwecke</h1>
 
-    <div class="flex flex-col">
-        @foreach($groups as $group)
-            <div class="w-full mb-2 p-3 space-y-1 bg-green-100">
-                <div class="flex justify-between">
-                    <div>
-                    {{ $group->name }}
+    <div class="space-y-2">
+        @forelse($groups as $group)
+            <div class="flex items-center justify-between bg-slate-50 border border-slate-100 rounded-xl px-4 py-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 bg-violet-100 rounded-full flex items-center justify-center text-violet-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        </svg>
                     </div>
-                    <a href="#delete" wire:click="delete({{ $group->id }})" class="bg-red-400 text-white p-1 rounded-md">Löschen</a>
+                    <span class="font-medium text-slate-800">{{ $group->name }}</span>
                 </div>
+                <button wire:click="delete({{ $group->id }})"
+                    class="flex items-center space-x-1 text-rose-500 hover:text-rose-700 hover:bg-rose-50 px-3 py-2 rounded-xl text-sm transition"
+                    onclick="return confirm('Verwendungszweck wirklich löschen?')">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    <span>Löschen</span>
+                </button>
             </div>
-        @endforeach
+        @empty
+            <div class="text-center py-10 text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-3 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                </svg>
+                Noch keine Verwendungszwecke angelegt.
+            </div>
+        @endforelse
     </div>
 </div>
