@@ -52,7 +52,7 @@
                     <div>
                         <p class="font-medium text-slate-800 text-sm">{{ $user->name }}</p>
                         <div class="flex items-center space-x-2">
-                            <span class="text-xs text-slate-400">@{{ $user->username }}</span>
+                            <span class="text-xs text-slate-400">{{ $user->username }}</span>
                             @if($user->admin)
                                 <span class="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-md font-medium">Admin</span>
                             @endif
